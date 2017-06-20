@@ -14,8 +14,7 @@ class AlmacenController extends Controller
      */
     public function index()
     {
-        $almacenes = Almacen::all(); 
-        $   
+        $almacenes = Almacen::all();         
         return view('almacenes.all')->with('almacenes', $almacenes);
     }
 
