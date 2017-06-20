@@ -26,8 +26,8 @@
 					@forelse($productos as $producto)
 						<tr class='clickable-row' data-href='{{ route('productos.show', ['id' => $producto->id]) }}'>
 							<td>{{ $producto->codigo }}</td>
-							<td>{{ $producto->nombre }}</td>
-							<td>{{ $producto->descripcion }}</td>
+							<td>{{ strtoupper($producto->nombre) }}</td>
+							<td>{{ ucfirst($producto->descripcion) }}</td>
 							<td>{{ $producto->precio_venta }}</td>
 							<td>{{ $producto->StockMinimo }}</td>
 							<td>{{ $producto->StockMaximo }}</td>

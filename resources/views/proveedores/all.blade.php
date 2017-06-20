@@ -24,8 +24,8 @@
 					@forelse($proveedores as $proveedor)
 						<tr class='clickable-row' data-href='{{ route('proveedores.show', ['id' => $proveedor->id]) }}'>
 							<td>{{ $proveedor->codigo }}</td>
-							<td>{{ $proveedor->nombre }}</td>
-							<td>{{ $proveedor->direccion }}</td>
+							<td>{{ ucfirst($proveedor->nombre) }}</td>
+							<td>{{ ucfirst($proveedor->direccion) }}</td>
 							<td>{{ $proveedor->telefono }}</td>
 						</tr>
 					@empty

@@ -96,15 +96,15 @@ class ProductoController extends Controller
      */
     public function update(Request $request, Producto $producto)
     {        
-        $this->validate($request, [
+        $validate = $this->validate($request, [
             'nombre'       => 'required|max:200',
             'descripcion'      => 'required',
             'unidad'    => 'required',
             'precio_venta' => 'required|numeric|min:1',
             'StockMinimo' => 'required|numeric|min:1',
-            'StockMaximo' => 'required|numeric|min:1',
-
+            'StockMaximo' => 'required|numeric|min:1'
         ]);
+        if($validate) {$validate->flash();}
 
         $producto->nombre      = $request->nombre;
         $producto->descripcion   = $request->descripcion;

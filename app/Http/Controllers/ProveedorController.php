@@ -37,12 +37,13 @@ class ProveedorController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+        $validate = $this->validate($request, [
             'codigo'       => 'required|unique:proveedores,codigo|numeric|digits_between:1,20',
             'nombre'       => 'required|max:200',
             'direccion'      => 'required|max:100',
             'telefono' => 'required|max:50'
-        ])->flash();
+        ]);
+        if($validate) {$validate->flash();}
 
         $proveedor = new Proveedor;
         $proveedor->codigo = $request->codigo;
@@ -89,11 +90,12 @@ class ProveedorController extends Controller
      */
     public function update(Request $request, Proveedor $proveedore)
     {
-        $this->validate($request, [        
+        $validate = $this->validate($request, [        
             'nombre'       => 'required|max:200',
             'direccion'      => 'required|max:100',
             'telefono' => 'required|max:50'
-        ])->flash();
+        ]);
+        if($validate) {$validate->flash();}
 
         $proveedore->nombre      = $request->nombre;
         $proveedore->direccion   = $request->direccion;

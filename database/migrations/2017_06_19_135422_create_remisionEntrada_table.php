@@ -15,8 +15,7 @@ class CreateRemisionEntradaTable extends Migration
     {
         Schema::create('remision_entrada', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('codigo', 20);
-            $table->date('fecha_documento');
+            $table->string('codigo', 20);            
             $table->integer('idProveedor')->unsigned();
             $table->integer('idAlmacen')->unsigned();
             $table->foreign('idProveedor')->references('id')->on('proveedores');

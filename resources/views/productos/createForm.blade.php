@@ -18,7 +18,7 @@
 						<div class="form-group">
 							<label for="codigo" class="col-sm-2 control-label">Código</label>
 							<div class="col-sm-10">	
-								<input type="number" class="form-control input-sm" id="codigo" placeholder="Código" name="codigo" value="{{ request()->old('codigo') }}">
+								<input type="number" class="form-control input-sm" id="codigo" placeholder="Código" name="codigo" value="{{ request()->old('codigo') }}" autofocus>
 								<span class="help-block">El último código mayor registrado es {{$codigo_max}}, se recomienda seguir la secuencia.</span>
 							</div>
 						</div>

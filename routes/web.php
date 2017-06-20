@@ -20,5 +20,11 @@ Route::get('/lol', function () {
     return 'lol';
 });
 
+
+Route::post('remisiones/confirmar', 'RemisionEntradaController@Confirm')->name('confirm');
+
+
 Route::resource('proveedores', 'ProveedorController');
 Route::resource('productos', 'ProductoController');
+Route::resource('remisiones', 'RemisionEntradaController');
+Route::resource('almacenes', 'AlmacenController');
