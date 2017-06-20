@@ -11,8 +11,8 @@
 |
 */
 
-//Route::group(['middleware' => 'auth'], function()
-//{
+Route::group(['middleware' => 'auth'], function()
+{
 	Route::post('remisiones/confirmar', 'RemisionEntradaController@Confirm')->name('confirm');
 	Route::post('remisiones/anular', 'RemisionEntradaController@Anular')->name('anular');
 	Route::post('remisiones/add-producto', 'RemisionEntradaController@add_producto')->name('add_producto_to_remision');
@@ -21,7 +21,7 @@
 	Route::resource('remisiones', 'RemisionEntradaController');
 	Route::resource('almacenes', 'AlmacenController');
 
-//});
+});
 
 
 Auth::routes();
