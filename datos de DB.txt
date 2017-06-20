@@ -1,0 +1,8 @@
+[
+'driver' => 'mysql',
+'host' => 'localhost',
+'port' => '3306',
+'database' => 'mer',
+'username' => 'mer_user',
+'password' => 'ZB0i5D73luEboKaw',
+]

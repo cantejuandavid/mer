@@ -41,11 +41,11 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'host' => 'mer.cqfsx30cjean.us-west-2.rds.amazonaws.com',
+            'host' => 'localhost',
             'port' => env('DB_PORT', '3306'),
-            'database' => 'mer_database',
+            'database' => 'mer',
             'username' => 'mer_user',
-            'password' => 'mer_password',
+            'password' => 'ZB0i5D73luEboKaw',
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
