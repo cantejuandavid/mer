@@ -13,9 +13,12 @@
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 
 Route::get('/lol', function () {
     return 'lol';
 });
+
+Route::resource('proveedores', 'ProveedorController');
+Route::resource('productos', 'ProductoController');
