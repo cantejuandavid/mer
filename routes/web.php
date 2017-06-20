@@ -16,12 +16,8 @@ Route::get('/', function () {
 })->name('home');
 
 
-Route::get('/lol', function () {
-    return 'lol';
-});
-
-
 Route::post('remisiones/confirmar', 'RemisionEntradaController@Confirm')->name('confirm');
+Route::post('remisiones/anular', 'RemisionEntradaController@Anular')->name('anular');
 
 
 Route::resource('proveedores', 'ProveedorController');

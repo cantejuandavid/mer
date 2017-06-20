@@ -23,10 +23,10 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li><a href="{{route('remisiones.index')}}">Remisiones</a></li>
-        <li><a href="{{route('proveedores.index')}}">Proveedores</a></li>
-        <li><a href="{{route('almacenes.index')}}">Almacenes</a></li>
-        <li><a href="{{route('productos.index')}}">Productos</a></li>
+        <li><a href="{{route('remisiones.index')}}">Remisiones <span class="badge">{{ App\RemisionEntrada::count() }}</span></a></li>
+        <li><a href="{{route('proveedores.index')}}">Proveedores <span class="badge">{{ App\Proveedor::count() }}</span></a></li>
+        <li><a href="{{route('almacenes.index')}}">Almacenes <span class="badge">{{ App\Almacen::count() }}</span></a></li>
+        <li><a href="{{route('productos.index')}}">Productos <span class="badge">{{ App\Producto::count() }}</span></a></li>
      
       </ul>
     </div><!-- /.navbar-collapse -->

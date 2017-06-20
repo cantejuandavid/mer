@@ -9,13 +9,17 @@
 	</ol>
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2">
-			<h2>Remisiones</h2>
+			<h2>Remisiones <span class="label label-default">{{ App\RemisionEntrada::count() }}</span>
+				<a href="{{route('remisiones.create')}}" title="Crear remision" class="btn btn-default btn-sm">
+					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Crear remision
+				</a>
+			</h2>
 			<table class="table proveedores">
 				<caption>Las siguientes son las remisiones a fecha de {{Carbon\Carbon::now()->toDateTimeString()}}</caption>
 				<thead>
 					<tr>
 						<th>Código</th>
-						<th>FechaDocumento</th>
+						<th>Fecha</th>
 						<th>Proveedor</th>
 						<th>Almacen</th>
 						<th>Estado</th>						
@@ -23,7 +27,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					@forelse($remisiones as $remision)
+					@forelse($remisiones->sortBy('created_at') as $remision)
 						<tr class='clickable-row {{$remision->estado == 3  ? 'bg-danger':'' }} {{$remision->estado == 2  ? 'bg-success':'' }} ' data-href='{{ route('remisiones.show', ['id' => $remision->id]) }}'>
 							<td>{{ $remision->codigo }}</td>
 							<td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $remision->created_at)->format('Y-m-d') }}</td>
@@ -45,8 +49,11 @@
 									<form action="{{ route('confirm', ['id'=>$remision->id]) }}" method="post">
 										{{ csrf_field() }}
 										<button type="submit" class="btn btn-primary btn-xs">Confirmar</button>
+									</form>
+									<form action="{{ route('anular', ['id'=>$remision->id]) }}" method="post">
+										{{ csrf_field() }}
+										<button type="submit" class="btn btn-danger btn-xs">Anular</button>
 									</form>									
-									<a href="" title="Anular" class="btn btn-danger btn-xs">Anular</a>
 								@elseif($remision->estado === 2)
 									
 								@else
@@ -66,15 +73,18 @@
 				</tbody>
 			</table>
 			<div class="text-center">
-				<a href="{{route('remisiones.create')}}" title="Crear remision" class="btn btn-default">
-					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Crear remision
-				</a>	
+				{{$remisiones->links()}}
 			</div>
-			
 			@if (session('status'))
-				<div class="alert alert-success" role="alert">
+				<div class="alert alert-{{session('alert')?session('alert'):'success'}}" role="alert">
 					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<strong>Bien hecho!</strong> {{ session('status') }}
+					<strong>
+						@if(session('alert') == 'danger')
+							Error!
+						@else
+							Bien hecho!
+						@endif
+					</strong> {{ session('status') }}
 				</div>
 			@endif
 		</div>

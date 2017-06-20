@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\RemisionEntradaDetalle;
 use App\RemisionEntrada;
 use App\Proveedor;
 use App\Almacen;
@@ -16,7 +17,7 @@ class RemisionEntradaController extends Controller
      */
     public function index()
     {
-        $remisiones  = RemisionEntrada::all();
+        $remisiones  = RemisionEntrada::paginate(5);
 
         foreach($remisiones as $remision) {            
             $proveedor = Proveedor::find($remision->proveedor_id);
@@ -70,7 +71,8 @@ class RemisionEntradaController extends Controller
 
         return redirect()
                 ->route('remisiones.index')
-                ->with('status', 'Remisión de entrada a sido creado con éxito.');
+                ->with('status', 'Remisión de entrada a sido creado con éxito.')
+                ->with('alert', 'success');
     }
 
     /**
@@ -79,9 +81,9 @@ class RemisionEntradaController extends Controller
      * @param  \App\RemisionEntrada  $remisionEntrada
      * @return \Illuminate\Http\Response
      */
-    public function show(RemisionEntrada $remisionEntrada)
+    public function show(RemisionEntrada $remisione)
     {
-        //
+        return $remisione->id;
     }
 
     /**
@@ -123,16 +125,42 @@ class RemisionEntradaController extends Controller
                 ->with('status', 'Remision eliminada.');
     }
 
-    public function confirm(Request $request)
-    {
+    public function anular(Request $request)
+    {        
         $remision = RemisionEntrada::find($request->id);
-        $remision->estado = 2;
+        $remision->estado = 3;
         $remision->save();
 
         // redirect
         return redirect()
                 ->route('remisiones.index')
-                ->with('status', 'Remision '.$remision->codigo.' confirmada.');
+                ->with('status', 'Remision '.$remision->codigo.' anulada.')
+                ->with('alert', 'success');
+    }    
+
+    public function confirm(Request $request)
+    {
+
+        $rDetalle = RemisionEntradaDetalle::where('idRemisionEntrada', $request->id)->get();
+        $remision = RemisionEntrada::find($request->id);
+        if(count($rDetalle)>0) {
+            
+            $remision->estado = 2;
+            $remision->save();
+
+            // redirect
+            return redirect()
+                    ->route('remisiones.index')
+                    ->with('status', 'Remision '.$remision->codigo.' confirmada.');
+        }
+        else{
+            return redirect()
+                    ->route('remisiones.index')
+                    ->with('status', 'La Remision ['.$remision->codigo.'] no tiene productos y no se puede confirmar.')
+                    ->with('alert', 'danger');
+        }
+
+        
     }
 
 }

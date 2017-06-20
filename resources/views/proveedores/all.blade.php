@@ -9,7 +9,11 @@
 	</ol>
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2">
-			<h2>Proveedores</h2>
+			<h2>Proveedores  <span class="label label-default">{{ App\Proveedor::count() }}</span>
+				<a href="{{route('proveedores.create')}}" title="Crear proveedor" class="btn btn-default btn-sm">
+					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Crear proveedor
+				</a>
+			</h2>
 			<table class="table table-striped table-hover proveedores">
 				<caption>A continuación encontrará todos los proveedores creados a {{Carbon\Carbon::now()->toDateTimeString()}}</caption>
 				<thead>
@@ -34,13 +38,11 @@
 				</tbody>
 			</table>
 			<div class="text-center">
-				<a href="{{route('proveedores.create')}}" title="Crear proveedor" class="btn btn-default">
-					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Crear proveedor
-				</a>	
+				{{ $proveedores->links() }}
 			</div>
 			
 			@if (session('status'))
-				<div class="alert alert-success" role="alert">
+				<div class="alert alert-{{session('alert')?session('alert'):'success'}}" role="alert">
 					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					<strong>Bien hecho!</strong> {{ session('status') }}
 				</div>
