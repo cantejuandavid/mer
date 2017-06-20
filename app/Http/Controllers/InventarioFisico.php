@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Almacen;
+use App\InventarioFisico;
 use Illuminate\Http\Request;
 
-class AlmacenController extends Controller
+class InventarioFisico extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +14,7 @@ class AlmacenController extends Controller
      */
     public function index()
     {
-        $almacenes = Almacen::all(); 
-        $   
-        return view('almacenes.all')->with('almacenes', $almacenes);
+        //
     }
 
     /**
@@ -26,8 +24,7 @@ class AlmacenController extends Controller
      */
     public function create()
     {
-        $max = Almacen::all()->max('codigo');    
-        return view('almacenes.createForm', ['codigo_max'=>$max]);
+        //
     }
 
     /**
@@ -38,29 +35,16 @@ class AlmacenController extends Controller
      */
     public function store(Request $request)
     {
-        $validate = $this->validate($request, [
-            'codigo'       => 'required|unique:almacenes,codigo|numeric|digits_between:1,20',
-            'nombre'       => 'required|max:100'
-        ]);
-        if($validate) {$validate->flash();}
-
-        $almacen = new Almacen;
-        $almacen->codigo = $request->codigo;
-        $almacen->nombre = $request->nombre;        
-        $almacen->save();
-
-        return redirect()
-                ->route('almacenes.index')
-                ->with('status', 'Almacén a sido creado con éxito.'); 
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Almacen  $almacen
+     * @param  \App\InventarioFisico  $inventarioFisico
      * @return \Illuminate\Http\Response
      */
-    public function show(Almacen $almacen)
+    public function show(InventarioFisico $inventarioFisico)
     {
         //
     }
@@ -68,10 +52,10 @@ class AlmacenController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Almacen  $almacen
+     * @param  \App\InventarioFisico  $inventarioFisico
      * @return \Illuminate\Http\Response
      */
-    public function edit(Almacen $almacen)
+    public function edit(InventarioFisico $inventarioFisico)
     {
         //
     }
@@ -80,10 +64,10 @@ class AlmacenController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Almacen  $almacen
+     * @param  \App\InventarioFisico  $inventarioFisico
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Almacen $almacen)
+    public function update(Request $request, InventarioFisico $inventarioFisico)
     {
         //
     }
@@ -91,10 +75,10 @@ class AlmacenController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Almacen  $almacen
+     * @param  \App\InventarioFisico  $inventarioFisico
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Almacen $almacen)
+    public function destroy(InventarioFisico $inventarioFisico)
     {
         //
     }

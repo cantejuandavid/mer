@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\RemisionEntradaDetalle;
 use App\RemisionEntrada;
 use App\Proveedor;
+use App\Producto;
+use App\InventarioFisico;
 use App\Almacen;
 use Illuminate\Http\Request;
 
@@ -83,7 +85,22 @@ class RemisionEntradaController extends Controller
      */
     public function show(RemisionEntrada $remisione)
     {
-        return $remisione->id;
+        $proveedores = Proveedor::all();    
+        $almacenes = Almacen::all();
+        $productos = Producto::all();
+
+        $productos_actuales = RemisionEntradaDetalle::where('idRemisionEntrada', $remisione->id)->get();
+        foreach($productos_actuales as $p)
+        {
+            $p->nombre = Producto::find($p->idProducto)->nombre;
+        }
+        return view('remisiones.show', [
+                'remision' => $remisione,
+                'proveedores' => $proveedores,
+                'almacenes' => $almacenes,
+                'productos' => $productos,
+                'productos_actuales' => $productos_actuales,
+            ]);
     }
 
     /**
@@ -104,9 +121,23 @@ class RemisionEntradaController extends Controller
      * @param  \App\RemisionEntrada  $remisionEntrada
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, RemisionEntrada $remisionEntrada)
+    public function update(Request $request, RemisionEntrada $remisione)
     {
-        //
+        $validate = $this->validate($request, [        
+            'proveedor_id'       => 'required|numeric|max:200',
+            'almacen_id'      => 'required|numeric|max:100'            
+        ]);
+        if($validate) {$validate->flash();}
+
+        $remisione->proveedor_id      = $request->proveedor_id;
+        $remisione->almacen_id   = $request->almacen_id;        
+        $remisione->save();
+
+        // redirect
+        return redirect()
+                ->route('remisiones.show',['id'=>$remisione->id])
+                ->with('status', 'Actualizada con exito.')
+                ->with('alert', 'success');
     }
 
     /**
@@ -136,17 +167,78 @@ class RemisionEntradaController extends Controller
                 ->route('remisiones.index')
                 ->with('status', 'Remision '.$remision->codigo.' anulada.')
                 ->with('alert', 'success');
+    }  
+
+    public function add_producto(Request $request)
+    {
+        $validate = $this->validate($request, [
+            'idRemisionEntrada'       => 'required|numeric',
+            'idProducto'       => 'required|numeric',
+            'cantidad'       => 'required|numeric|max:200'
+        ]);
+        if($validate) {$validate->flash();}
+
+        $r = RemisionEntradaDetalle::where('idRemisionEntrada', $request->idRemisionEntrada)
+                ->where('idProducto', $request->idProducto)
+                ->get();
+
+        if(count($r)>0)        
+        {
+            return redirect()
+                    ->route('remisiones.show',['id'=>$request->idRemisionEntrada])
+                    ->with('status', 'No se puede agregar dos veces el mismo producto al detalle de la remisión de entrada.')
+                    ->with('alert', 'danger');
+        }
+        else
+
+        {
+            $n = new RemisionEntradaDetalle;
+            $n->idRemisionEntrada = $request->idRemisionEntrada;
+            $n->idProducto = $request->idProducto;
+            $n->cantidad = $request->cantidad;
+            $n->save();
+
+            return redirect()->action(
+                'RemisionEntradaController@show', ['id' => $request->idRemisionEntrada]
+            );
+
+        }
     }    
 
     public function confirm(Request $request)
     {
-
+        $idAlmacen = Almacen::where('nombre', $request->idAlmacen)->pluck('id')[0];
+        
         $rDetalle = RemisionEntradaDetalle::where('idRemisionEntrada', $request->id)->get();
         $remision = RemisionEntrada::find($request->id);
         if(count($rDetalle)>0) {
             
             $remision->estado = 2;
             $remision->save();
+
+
+            $productos_actuales = RemisionEntradaDetalle::where('idRemisionEntrada', $request->id)->get();
+
+            foreach($productos_actuales as $prod) {
+
+                $produc_exits = InventarioFisico::where('idAlmacen', $idAlmacen)
+                        ->where('idProducto', $prod->idProducto)
+                        ->get();
+
+                if(count($produc_exits) > 0) {
+                    InventarioFisico::where('idAlmacen', $idAlmacen)
+                        ->where('idProducto', $prod->idProducto)
+                        ->increment('cantidad', $prod->cantidad);
+                }
+                else
+                {
+                    $i = new InventarioFisico;
+                    $i->idAlmacen = $idAlmacen;
+                    $i->idProducto = $prod->idProducto;
+                    $i->cantidad = $prod->cantidad;
+                    $i->save();
+                }                
+            }
 
             // redirect
             return redirect()

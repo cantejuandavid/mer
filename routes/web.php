@@ -11,16 +11,19 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::group(['middleware' => 'auth'], function()
+{
+	Route::post('remisiones/confirmar', 'RemisionEntradaController@Confirm')->name('confirm');
+	Route::post('remisiones/anular', 'RemisionEntradaController@Anular')->name('anular');
+	Route::post('remisiones/add-producto', 'RemisionEntradaController@add_producto')->name('add_producto_to_remision');
+	Route::resource('proveedores', 'ProveedorController');
+	Route::resource('productos', 'ProductoController');
+	Route::resource('remisiones', 'RemisionEntradaController');
+	Route::resource('almacenes', 'AlmacenController');
+
+});
 
 
-Route::post('remisiones/confirmar', 'RemisionEntradaController@Confirm')->name('confirm');
-Route::post('remisiones/anular', 'RemisionEntradaController@Anular')->name('anular');
+Auth::routes();
 
-
-Route::resource('proveedores', 'ProveedorController');
-Route::resource('productos', 'ProductoController');
-Route::resource('remisiones', 'RemisionEntradaController');
-Route::resource('almacenes', 'AlmacenController');
+Route::get('/', 'HomeController@index')->name('home');

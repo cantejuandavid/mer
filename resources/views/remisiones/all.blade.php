@@ -48,6 +48,7 @@
 
 									<form action="{{ route('confirm', ['id'=>$remision->id]) }}" method="post">
 										{{ csrf_field() }}
+										<input type="hidden" name="idAlmacen" value="{{$remision->almacen_id}}">
 										<button type="submit" class="btn btn-primary btn-xs">Confirmar</button>
 									</form>
 									<form action="{{ route('anular', ['id'=>$remision->id]) }}" method="post">
