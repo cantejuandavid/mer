@@ -6,3 +6,10 @@
 'username' => 'mer_user',
 'password' => 'ZB0i5D73luEboKaw',
 ]
+
+url para ver el proyecto: http://localhost/mer/public/
+
+Se puede crear tambien un usuario en la aplicación este es el que manejo:
+
+e-mail:cantejuandavid@gmail.com
+contraseña:juandavid
