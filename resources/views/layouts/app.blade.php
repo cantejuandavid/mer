@@ -85,6 +85,12 @@
              $(".clickable-row").click(function() {
                 window.location = $(this).data("href");
              });
+
+            $('form#createRemisionForm .popup_class').click(function(e) {
+                e.preventDefault();
+                var url = $(this).attr('data-popupUrl')                
+                window.open (url,"mywindow","menubar=1,resizable=1,width=650,height=450");
+            });
         });
     </script>
     <script src="{{ asset('js/app.js') }}"></script>

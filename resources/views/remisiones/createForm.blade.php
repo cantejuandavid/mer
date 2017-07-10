@@ -13,7 +13,7 @@
 			<div class="panel panel-default">
 				<div class="panel-body">
 					<h2>Crear Remisión</h2>
-					<form class="form-horizontal" action="{{route('remisiones.store')}}" method="post">
+					<form id="createRemisionForm" class="form-horizontal" action="{{route('remisiones.store')}}" method="post">
 						{{ csrf_field() }}
 						<div class="form-group">
 							<label for="codigo" class="col-sm-2 control-label">Código</label>
@@ -26,7 +26,7 @@
 							<label for="nombre" class="col-sm-2 control-label">Proveedor</label>
 							<div class="col-sm-6">
 								@if(!count($proveedores))
-									<a href="{{route('proveedores.create')}}" title="Crear proveedor">Crear Proveedor</a>
+									<p>No hay proveedores creados!</p>
 								@else
 									<select class="form-control" name="proveedor_id">
 										<option value="">Seleccionar proveedor</option>
@@ -37,14 +37,14 @@
 								@endif
 							</div>
 							<div class="col-sm-4">
-								<a href="{{route('proveedores.create')}}" title="Crear proveedor">Crear proveedor</a>
+								<button class="btn btn-default btn-sm popup_class" data-popupUrl="{{route('proveedores.create')}}">Crear proveedor</button>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="telefono" class="col-sm-2 control-label">Almacén</label>
 							<div class="col-sm-6">
 								@if(!count($almacenes))
-									<a href="{{route('almacenes.create')}}" title="Crear proveedor">Crear Almacén</a>
+									<p>No hay almacenes creados!</p>
 								@else
 									<select class="form-control" name="almacen_id">
 										<option value="">Seleccionar almacén</option>									
@@ -54,8 +54,9 @@
 									</select>
 								@endif
 							</div>
-							<div class="col-sm-4">
-								<a href="{{route('almacenes.create')}}" title="Crear proveedor">Crear almacén</a>
+							<div class="col-sm-4">							
+								<button class="btn btn-default btn-sm popup_class" data-popupUrl="{{route('almacenes.create')}}">Crear Almacén</button>
+
 							</div>
 						</div>	
 						<div class="form-group text-center">
