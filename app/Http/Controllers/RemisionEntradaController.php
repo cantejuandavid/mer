@@ -147,7 +147,7 @@ class RemisionEntradaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(RemisionEntrada $remisione)
-    {
+    {        
         $remisione->delete();
 
         // redirect
