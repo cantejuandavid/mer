@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Login')
 
 @section('content')
 <div class="container">
@@ -14,7 +15,7 @@
                             <label for="email" class="col-md-4 control-label">E-Mail</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
+                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email', 'cantejuandavid@gmail.com') }}" required autofocus>
 
                                 @if ($errors->has('email'))
                                     <span class="help-block">
@@ -28,7 +29,7 @@
                             <label for="password" class="col-md-4 control-label">Contraseña</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
+                                <input id="password" type="password" class="form-control" name="password" value="juandavid" required>
 
                                 @if ($errors->has('password'))
                                     <span class="help-block">
