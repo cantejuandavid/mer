@@ -22,10 +22,10 @@
 								@if(!count($proveedores))
 									<a href="{{route('proveedores.create')}}" title="Crear proveedor">Crear Proveedor</a>
 								@else
-									<select class="form-control" name="proveedor_id">
+									<select class="form-control" name="idProveedor">
 										<option value="">Seleccionar proveedor</option>
 										@foreach($proveedores as $proveedor)
-											<option value="{{$proveedor->id}}" {{$remision->proveedor_id == $proveedor->id?'selected':''}}>[{{$proveedor->codigo}}] {{$proveedor->nombre}}</option>
+											<option value="{{$proveedor->id}}" {{$remision->idProveedor == $proveedor->id?'selected':''}}>[{{$proveedor->codigo}}] {{$proveedor->nombre}}</option>
 										@endforeach
 									</select>
 								@endif
@@ -40,10 +40,10 @@
 								@if(!count($almacenes))
 									<a href="{{route('almacenes.create')}}" title="Crear proveedor">Crear Almacén</a>
 								@else
-									<select class="form-control" name="almacen_id">
+									<select class="form-control" name="idAlmacen">
 										<option value="">Seleccionar almacén</option>									
 										@foreach($almacenes as $almacen)
-											<option value="{{$almacen->id}}" {{$remision->almacen_id == $almacen->id?'selected':''}}>{{$almacen->nombre}}</option>
+											<option value="{{$almacen->id}}" {{$remision->idAlmacen == $almacen->id?'selected':''}}>{{$almacen->nombre}}</option>
 										@endforeach
 									</select>
 								@endif

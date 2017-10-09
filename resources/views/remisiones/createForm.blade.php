@@ -28,7 +28,7 @@
 								@if(!count($proveedores))
 									<p>No hay proveedores creados!</p>
 								@else
-									<select class="form-control" name="proveedor_id">
+									<select class="form-control" name="idProveedor">
 										<option value="">Seleccionar proveedor</option>
 										@foreach($proveedores as $proveedor)
 											<option value="{{$proveedor->id}}">[{{$proveedor->codigo}}] {{$proveedor->nombre}}</option>
@@ -46,7 +46,7 @@
 								@if(!count($almacenes))
 									<p>No hay almacenes creados!</p>
 								@else
-									<select class="form-control" name="almacen_id">
+									<select class="form-control" name="idAlmacen">
 										<option value="">Seleccionar almacén</option>									
 										@foreach($almacenes as $almacen)
 											<option value="{{$almacen->id}}">{{$almacen->nombre}}</option>

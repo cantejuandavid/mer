@@ -31,8 +31,8 @@
 						<tr class='clickable-row {{$remision->estado == 3  ? 'bg-danger':'' }} {{$remision->estado == 2  ? 'bg-success':'' }} ' data-href='{{ route('remisiones.show', ['id' => $remision->id]) }}'>
 							<td>{{ $remision->codigo }}</td>
 							<td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $remision->created_at)->format('Y-m-d') }}</td>
-							<td>{{ ucfirst($remision->proveedor_id) }}</td>
-							<td>{{ strtoupper($remision->almacen_id) }}</td>
+							<td>{{ ucfirst($remision->idProveedor) }}</td>
+							<td>{{ strtoupper($remision->idAlmacen) }}</td>
 							<td>
 								@if($remision->estado === 1)
 									Registrada
@@ -48,7 +48,7 @@
 
 									<form action="{{ route('confirm', ['id'=>$remision->id]) }}" method="post">
 										{{ csrf_field() }}
-										<input type="hidden" name="idAlmacen" value="{{$remision->almacen_id}}">
+										<input type="hidden" name="idAlmacen" value="{{$remision->idAlmacen}}">
 										<button type="submit" class="btn btn-primary btn-xs">Confirmar</button>
 									</form>
 									<form action="{{ route('anular', ['id'=>$remision->id]) }}" method="post">

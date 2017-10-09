@@ -22,10 +22,11 @@ class RemisionEntradaController extends Controller
         $remisiones  = RemisionEntrada::paginate(5);
 
         foreach($remisiones as $remision) {            
-            $proveedor = Proveedor::find($remision->proveedor_id);
-            $almacen = Almacen::find($remision->almacen_id);
-            $remision->proveedor_id = $proveedor->nombre;
-            $remision->almacen_id = $almacen->nombre;
+            $proveedor = Proveedor::find($remision->idProveedor);
+            $almacen = Almacen::find($remision->idAlmacen);
+
+            $remision->idProveedor = $proveedor->nombre;
+            $remision->idAlmacen = $almacen->nombre;
         }
 
         
@@ -59,15 +60,15 @@ class RemisionEntradaController extends Controller
     {
         $validate = $this->validate($request, [
             'codigo'       => 'required|unique:remision_entrada,codigo|numeric|digits_between:1,20',
-            'proveedor_id'       => 'required|numeric',
-            'almacen_id'       => 'required|numeric'
+            'idProveedor'       => 'required|numeric',
+            'idAlmacen'       => 'required|numeric'
         ]);
         if($validate) {$validate->flash();}
 
         $proveedor = new RemisionEntrada;
         $proveedor->codigo = $request->codigo;
-        $proveedor->proveedor_id = $request->proveedor_id;
-        $proveedor->almacen_id = $request->almacen_id;
+        $proveedor->idProveedor = $request->idProveedor;
+        $proveedor->idAlmacen = $request->idAlmacen;
         $proveedor->estado = 1;
         $proveedor->save();
 
@@ -124,13 +125,13 @@ class RemisionEntradaController extends Controller
     public function update(Request $request, RemisionEntrada $remisione)
     {
         $validate = $this->validate($request, [        
-            'proveedor_id'       => 'required|numeric|max:200',
-            'almacen_id'      => 'required|numeric|max:100'            
+            'idProveedor'       => 'required|numeric|max:200',
+            'idAlmacen'      => 'required|numeric|max:100'            
         ]);
         if($validate) {$validate->flash();}
 
-        $remisione->proveedor_id      = $request->proveedor_id;
-        $remisione->almacen_id   = $request->almacen_id;        
+        $remisione->idProveedor      = $request->idProveedor;
+        $remisione->idAlmacen   = $request->idAlmacen;        
         $remisione->save();
 
         // redirect
@@ -211,6 +212,7 @@ class RemisionEntradaController extends Controller
         
         $rDetalle = RemisionEntradaDetalle::where('idRemisionEntrada', $request->id)->get();
         $remision = RemisionEntrada::find($request->id);
+        
         if(count($rDetalle)>0) {
             
             $remision->estado = 2;
